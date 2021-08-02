@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>To-Do List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../static/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <form action="/add" method="POST">
+      <div class="main">
+        <div class="form-group">
+          <input type="text" class="form-control" name="title" placeholder="Enter task" autocomplete="off" autofocus required />
+        </div>
+        <button class="btn btn-primary" type="submit">Add</button>
+      </div>
+    </form>
+    <div class="list">
+      {% for todo in todo_list %}
+      <div class="item">
+        <h4>{{ todo.title }}</h4>
+        <div class="links">
+          <a data-target="#myModal" href="#myModal" data-toggle="modal"><button class="btn btn-success">Update</button></a>
+          <a href="/delete/{{todo.id}}"><button class="btn btn-danger">Delete</button></a>
+        </div>
+        <hr>
+      </div>
+
+      <form action="/update/{{todo.id}}" method="POST">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">Edit Task</h3>
+              </div>
+
+              <div class="modal-body">
+                <div class="form-group">
+                  <input type="text" class="form-control" autofocus name="edit_text" placeholder="Edit task" autocomplete="off" required />
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+</html>
